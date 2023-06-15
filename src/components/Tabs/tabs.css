@@ -1,0 +1,46 @@
+.tab-container {
+    display: flex;
+    padding: 1rem 15%;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid rgba(39, 106, 160, 0.31);
+}
+
+.photo-video-tab {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.select {
+    color: #E81244;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 21px;
+    border-bottom: 3px solid #EC2C59;
+    padding-bottom: 2px;
+    cursor: pointer;
+}
+
+.unSelect {
+    opacity: 0.5;
+    color: #230735;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 21px;
+    text-align: center;
+    cursor: pointer;
+    padding-bottom: 3px;
+}

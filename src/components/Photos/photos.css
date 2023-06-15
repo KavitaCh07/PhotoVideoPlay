@@ -1,0 +1,50 @@
+.photo-container {
+    display: flex;
+    padding: 1.5rem 0;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+img.photo-img {
+    display: flex;
+    width: 224px;
+    height: 155px;
+    position: relative;
+}
+
+.photo-info {
+    position: absolute;
+}
+
+img.heart-img {
+    position: absolute;
+    bottom: 7.8rem;
+    left: 12rem;
+}
+
+.photographer-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: .7rem;
+    position: absolute;
+    bottom: .6rem;
+    left: .7rem;
+    width: 190px;
+}
+
+.profile-img {
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+}
+
+.photographer-name {
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 24px;
+}
