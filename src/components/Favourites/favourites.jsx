@@ -1,9 +1,6 @@
 import React from 'react';
 import './favourites.css';
-// import photo from '../../assets/photo.png';
-// import white from '../../assets/white-heart.png';
 import red from '../../assets/red-heart.png';
-// import profile from '../../assets/Oval.png';
 import play from '../../assets/play.png';
 import { useState } from 'react';
 
@@ -32,9 +29,9 @@ const Favourites = () => {
           return (
             <div className='photo' key={i}>
               {isPhoto ? (
-                <img src={favItem.src.small} className='photo-img' alt="" />
+                <img src={favItem && favItem.src && favItem.src.small} className='photo-img' alt="" />
               ) : (
-                <img src={favItem.image} className='video-img' alt="" />
+                <img src={favItem && favItem.image} className='video-img' alt="" />
               )}
               <div className="photo-info">
                 <img src={red} className='heart-img' alt="" onClick={() => { removeFav(favItem) }} />
@@ -42,8 +39,8 @@ const Favourites = () => {
                   <img src={play} alt="" className='play-img' />
                 )}
                 <div className='photographer-info'>
-                  <img src={isPhoto ? favItem.photographer_url : favItem.user.url} className='profile-img' alt="" />
-                  <div className="photographer-name">{isPhoto ? favItem.photographer : favItem.user.name}</div>
+                  <img src={isPhoto ?favItem && favItem.photographer_url : favItem && favItem.user && favItem.user.url} className='profile-img' alt="" />
+                  <div className="photographer-name">{isPhoto ? favItem && favItem.photographer : favItem && favItem.user && favItem.user.name}</div>
                 </div>
               </div>
             </div>

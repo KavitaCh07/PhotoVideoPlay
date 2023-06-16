@@ -1,0 +1,64 @@
+img.bigger-img {
+    width: 940px;
+    height: 522px;
+    position: relative;
+}
+
+.photo-about-heart {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+
+/* .photo-about-heart {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 30rem;
+    left: 14.5rem;
+    align-items: center;
+    justify-content: space-between;
+} */
+
+.photo-about {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: baseline;
+    position: absolute;
+    bottom: 29.5rem;
+    left: 14.5rem;
+    width: 500px;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 28px;
+}
+
+img.big-heart-img {
+    position: absolute;
+    right: -70rem;
+    /* left: 25rem; */
+    bottom: 29.5rem;
+    cursor: pointer;
+}
+
+.photo-profile-info {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+    position: absolute;
+    bottom: 27rem;
+    left: 14.4rem;
+}
+
+.photo-profile-name{
+    color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 24px;
+}

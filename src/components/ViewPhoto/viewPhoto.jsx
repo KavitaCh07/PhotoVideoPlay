@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import './viewPhoto.css';
+import Header2nd from '../Header2nd/header2nd';
+import Footer from '../Footer/footer';
+import big from '../../assets/Rectangle.png';
+import heart from '../../assets/big-white.png';
+import red from '../../assets/big-red.png';
+import profile from '../../assets/Oval.png';
+import { useLocation } from 'react-router-dom';
+
+const ViewPhoto = (props) => {
+
+    const location = useLocation();
+    const [fav, setFav] = useState(false);
+    const [inputData, setInputData] = useState();
+    const id = location.state.id;
+    console.log("id clicked", id);
+
+    const viewPhoto = [
+        { id: location.state.id, src:location.state.src, alt: location.state.alt, photographer: location.state.photographer, photographer_url: location.state.photographer_url, }
+    ]
+    console.log("viee", viewPhoto);
+    const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+
+    const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+
+    const addFav = (data) => {
+        console.log(data);
+        const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+        console.log("previ", previousData);
+        const arr = [];
+        previousData.map((user, i) => {
+            if ((user && user.id) === (data && data.id)) {
+                arr.push("exists");
+            }
+        });
+        if (arr.includes("exists")) {
+            alert("already exist");
+        }
+        else {
+            if (data !== "" && data.message !== "Internal Server Error") {
+                previousData.push(data);
+                localStorage.setItem("favPhoto", JSON.stringify(previousData));
+            }
+            else {
+                alert("enter corect data")
+            }
+        }
+    }
+
+    const removeFav = (data) => {
+        const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+        let remId = -1;
+        for (let i = 0; i < favourites.length; i++) {
+            if (favourites[i].id === data.id) {
+                remId = i;
+            }
+        }
+        favourites.splice(remId, 1);
+        localStorage.setItem("favPhoto", JSON.stringify(favourites));
+        setFav(!fav);
+    };
+
+    return (
+        <div>
+            <Header2nd />
+            <div className="viewPhoto-container">
+                {viewPhoto.map((data) => {
+
+                    const favHandler = () => {
+                        setInputData(data.src);
+                    };
+
+
+                    let fav = false;
+                    for (let i = 0; i < favourites.length; i++) {
+                        if (favourites[i].id === data.id) {
+                            console.log("both id", favourites[i].id, data.id);
+                            fav = true;
+                            break
+                        }
+                        else {
+                            fav = false;
+                        }
+                    }
+
+                    return (
+                        <div className="view-photo" key={data.id}>
+                            <img src={data.src.landscape} alt="" className='bigger-img' />
+                            <div className="view-photo-info">
+                                <div className="photo-about-heart">
+                                    <div className="photo-about">{data.alt}</div>
+                                    {fav ?
+                                        (<img src={red} alt="" className='big-heart-img' onClick={() => { removeFav(data) }} />) :
+                                        (<img src={heart} alt="" className='big-heart-img' onClick={() => { addFav(data); favHandler(); }} />)}
+                                </div>
+                                <div className="photo-profile-info">
+                                    <img src={data.photographer_url} alt="" className='profile-img' />
+                                    <div className="photo-profile-name">{data.photographer}</div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+
+                })}
+                {/* <div className="view-photo" key={location.state.id}>
+            <img src={location.state.src} alt="" className='bigger-img'/>
+            <div className="view-photo-info">
+                <div className="photo-about-heart">
+                    <div className="photo-about">{location.state.alt}</div>
+                    {fav === true ? 
+                    (<img src={heart} alt="" className='big-heart-img'/>):
+                    (<img src={red} alt="" className='big-heart-img'/>)}
+                    
+                </div>
+                <div className="photo-profile-info">
+                    <img src={location.state.userphoto} alt="" className='profile-img'/>
+                    <div className="photo-profile-name">{location.state.username}</div>
+                </div>
+            </div>
+        </div> */}
+            </div>
+            <Footer />
+        </div>
+    )
+}
+
+export default ViewPhoto;

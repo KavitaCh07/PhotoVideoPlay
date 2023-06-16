@@ -6,9 +6,11 @@ import red from '../../assets/red-heart.png';
 import profile from '../../assets/Oval.png';
 import play from '../../assets/play.png';
 import { useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Videos = () => {
 
+  const navigate = useNavigate()
   const [fav, setFav] = useState(false);
   const [inputData, setInputData] = useState();
   const videoData = useSelector((state) => state.photoVideo.video);
@@ -36,8 +38,7 @@ const Videos = () => {
       else {
         alert("enter corect data")
       }
-    }
-  }
+    }}
 
   const removeFav = (data) => {
     const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
@@ -73,6 +74,12 @@ const Videos = () => {
               fav = false
             }
           }
+
+          const toComponentB = (data) => {
+            navigate('/playVideo', { state: {videoId:data.id, src:data.image, url: data.video_files[0].link, id: data.video_files[0].id, username: data.photographer, userphoto: data.user.url } });
+            // <Link to={pathname: "/pmodal", state:{data}}></Link>
+          }
+
           return (
             <div className='video'>
               <img src={data.image} alt="" className='video-img' />
@@ -81,7 +88,9 @@ const Videos = () => {
                   <img src={white} alt="" className='heart-img' onClick={() => { addFav(data); favHandler(); }} /> :
                   <img src={red} alt="" className='heart-img' onClick={() => { removeFav(data) }} />
                 }
-                <img src={play} alt="" className='play-img' />
+                <Link to="/playVideo" state={{videoId:data.id, src: data.image, url: data.video_files[0].link, username: data.user.name, id: data.video_files[0].id, userphoto: data.user.url }} key={data.id} className="linkButton">
+                <img src={play} alt="" className='play-img' o onClick={() => { toComponentB(data) }}/>
+                </Link>
                 <div className='photographer-info'>
                   <img src={data.user.url} alt="" className='profile-img' />
                   <div className="photographer-name">{data.user.name}</div>
@@ -90,7 +99,6 @@ const Videos = () => {
             </div>
           )
         })}
-
       </div>
     </div>
   )

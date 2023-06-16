@@ -11,9 +11,10 @@ const Header = () => {
   const [photoData, setPhotoData] = useState();
   const [videoData, setVideoData] = useState();
   const [inputData, setInputData] = useState();
+  
   const dispatch = useDispatch();
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     setInputData(e.target.inputData.value);
     localStorage.setItem("searchTerm", JSON.stringify(inputData))
@@ -24,50 +25,41 @@ const Header = () => {
   }
 
   let value = "ocean";
-  useEffect(()=>{
-    axios.get(`https://api.pexels.com/v1/search?query=${inputData||value}&per_page=10`,
-    {
-      mode: 'cors',
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization : "tFGvMnGxTtsFqSf6DwgXiatTkQBSAiihxPCNAHzaNDECimyqkLLw100L"
-      },
-    }).then((res)=>{
-      console.log(res);
-      setPhotoData(res.data);
-      // dispatch(AddPhoto(photoData))
-    }).catch((err)=>{
-      console.log(err);
-    })
-  },[inputData]);
-
-  // useEffect(()=>{
-  //   dispatch(AddPhoto(photoData));
-  //   console.log("dispatch", photoData);
-  // },[inputData]);
+  useEffect(() => {
+    axios.get(`https://api.pexels.com/v1/search?query=${inputData || value}&per_page=10`,
+      {
+        mode: 'cors',
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "tFGvMnGxTtsFqSf6DwgXiatTkQBSAiihxPCNAHzaNDECimyqkLLw100L"
+        },
+      }).then((res) => {
+        console.log(res);
+        setPhotoData(res.data);
+        // dispatch(AddPhoto(photoData))
+      }).catch((err) => {
+        console.log(err);
+      })
+  }, [inputData]);
 
 
-  useEffect(()=>{
-    axios.get(`https://api.pexels.com/videos/search?query=${inputData||value}&per_page=10`,
-    {
-      headers: {
-        Authorization : "tFGvMnGxTtsFqSf6DwgXiatTkQBSAiihxPCNAHzaNDECimyqkLLw100L"
-      },
-    }).then((res)=>{
-      console.log(res);
-      setVideoData(res.data);
-      // console.log("dispatch", photoData);
-    }).catch((err)=>{
-      console.log(err);
-    })
-  },[inputData]);
+  useEffect(() => {
+    axios.get(`https://api.pexels.com/videos/search?query=${inputData || value}&per_page=10`,
+      {
+        headers: {
+          Authorization: "tFGvMnGxTtsFqSf6DwgXiatTkQBSAiihxPCNAHzaNDECimyqkLLw100L"
+        },
+      }).then((res) => {
+        console.log(res);
+        setVideoData(res.data);
+        // console.log("dispatch", photoData);
+      }).catch((err) => {
+        console.log(err);
+      })
+  }, [inputData]);
 
-  // const arr=[];
-  // const handleStoring = ()=>{
-
-  // }
 
   return (
     <div>

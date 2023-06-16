@@ -3,8 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     photo:[],
     video:[],
-    // favPhoto: JSON.parse(localStorage.getItem("favPhoto")||[]),
-    // favVideo: JSON.parse(localStorage.getItem("favVideo")||[])
 }
 
 const PhotoVideoSlice = createSlice({
@@ -19,11 +17,6 @@ const PhotoVideoSlice = createSlice({
             state.video = action.payload
             console.log("video.hit");
         },
-        // AddFav: (state, action)=>{
-        //     state.favPhoto=action.payload
-        //     console.log("fav hit",state.favPhoto);
-        //     localStorage.setItem("favPhoto",  JSON.stringify(state.favPhoto));
-        // }
     }
 })
 

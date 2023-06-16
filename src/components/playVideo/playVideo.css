@@ -1,0 +1,55 @@
+.playVideo-container{
+
+}
+
+.video-box{
+    width: 940px;
+    height: 475px;
+    position: relative;
+}
+
+.video-bigger-img{
+    width: 970px;
+    height: 475px;
+}
+
+.photo-about-heart {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+
+.video-about {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: baseline;
+    position: absolute;
+    bottom: 27rem;
+    left: 17.9rem;
+    width: 500px;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 28px;
+}
+
+.video-big-heart-img{
+    position: absolute;
+    right: -67rem;
+    /* left: 25rem; */
+    bottom: 27rem;
+    cursor: pointer;
+}
+
+.video-profile-info{
+display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+    position: absolute;
+    bottom: 28rem;
+    left: 17.9rem;
+}

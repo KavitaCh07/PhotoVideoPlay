@@ -7,11 +7,14 @@ import profile from '../../assets/Oval.png';
 import { useSelector } from 'react-redux';
 import { AddFav } from '../../redux/slice';
 import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import ViewPhoto from '../ViewPhoto/viewPhoto';
 
 const Photos = () => {
 
   const [fav, setFav] = useState(false);
   const [inputData, setInputData] = useState();
+  const navigate = useNavigate();
 
   const photoData = useSelector((state) => state.photoVideo.photo);
   const photoDataFav = useSelector((state) => state.photoVideo.photo.photos);
@@ -19,7 +22,7 @@ const Photos = () => {
   // console.log("photo page id", photoDataFav[i].id);
   const dispatch = useDispatch();
   const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-
+  
 
   const addFav = (data) => {
     console.log(data);
@@ -45,20 +48,6 @@ const Photos = () => {
     }
   }
 
-  // const removeFav=(data)=>{
-  //  const deleteFavPhoto= JSON.parse(localStorage.getItem("favPhoto")||"[]");
-  // let removeId = -1;
-  // for(let i=0; i < deleteFavPhoto.length; i++)
-  // {
-  //   if(deleteFavPhoto[i].id === data.id){
-  //     removeId=i;
-  //   }
-  // }
-  // deleteFavPhoto.splice(removeId, 1)
-  // localStorage.setItem("favPhoto", JSON.stringify(deleteFavPhoto))
-  // setFav(!fav)
-  // };
-
   const removeFav = (data) => {
     const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
     let remId = -1;
@@ -82,6 +71,7 @@ const Photos = () => {
             setInputData(data.src.small);
           };
 
+
           let fav = false;
           for (let i = 0; i < previousData.length; i++) {
             if (previousData[i].id === data.id) {
@@ -92,13 +82,19 @@ const Photos = () => {
             }
           }
 
+          const toComponentB = (data) => {
+            navigate('/viewPhoto', { state: {id:data.id, src: {landscape:data.src.landscape, medium: data.src.medium, small: data.src.small} , photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url} });
+          }
+
           return (
             <div className='photo'>
-              <img src={data?.src?.medium} alt="" className='photo-img' />
+              <Link to="/viewPhoto" state={{id:data.id, src: {landscape:data.src.landscape, medium: data.src.medium, small: data.src.small} , photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url}} key={data.id} className="linkButton">
+                <img src={data?.src?.medium} alt="" className='photo-img' onClick={() => { toComponentB(data); }} />
+              </Link>
               <div className='photo-info'>
                 {fav === false ?
                   <img src={white} alt="" className='heart-img' onClick={() => { addFav(data); favHandler(); }} /> :
-                  <img src={red} alt="" className='heart-img' onClick={()=>{removeFav(data)}}/>
+                  <img src={red} alt="" className='heart-img' onClick={() => { removeFav(data) }} />
                 }
                 <div className='photographer-info'>
                   <img src={data?.photographer_url} alt="" className='profile-img' />
