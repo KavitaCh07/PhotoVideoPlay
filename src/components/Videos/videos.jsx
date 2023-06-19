@@ -77,8 +77,8 @@ const Videos = () => {
 
           const toComponentB = (data) => {
             navigate('/playVideo', { state: {videoId:data.id, src:data.image, url: data.video_files[0].link, id: data.video_files[0].id, username: data.photographer, userphoto: data.user.url } });
-            // <Link to={pathname: "/pmodal", state:{data}}></Link>
           }
+
 
           return (
             <div className='video'>

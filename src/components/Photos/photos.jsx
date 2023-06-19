@@ -3,7 +3,6 @@ import './photos.css';
 import photo from '../../assets/photo.png';
 import white from '../../assets/white-heart.png';
 import red from '../../assets/red-heart.png';
-import profile from '../../assets/Oval.png';
 import { useSelector } from 'react-redux';
 import { AddFav } from '../../redux/slice';
 import { useDispatch } from 'react-redux';
