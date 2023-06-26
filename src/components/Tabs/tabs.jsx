@@ -6,20 +6,23 @@ import Videos from '../Videos/videos';
 import Favourites from '../Favourites/favourites';
 
 const Tabs = () => {
-  const [tab, setTab] = useState(1);
+  let photos=0;
+  let videos=1;
+  let favourites=2;
+  const [tab, setTab] = useState(photos);
   return (
     <div>
       <div className='tab-container'>
         <div className='tabs'>
           <div className='photo-video-tab'>
-            <div className={tab === 1 ? 'select' : 'unSelect'} onClick={()=>{setTab(1)}}>Photos</div>
-            <div className={tab === 2 ? 'select' : 'unSelect'} onClick={()=>{setTab(2)}}>Videos</div>
+            <div className={tab === photos ? 'select' : 'unSelect'} onClick={()=>{setTab(photos)}}>Photos</div>
+            <div className={tab === videos ? 'select' : 'unSelect'} onClick={()=>{setTab(videos)}}>Videos</div>
           </div>
-          <div className={tab === 3 ? 'select' : 'unSelect'} onClick={()=>{setTab(3)}}>Favourites</div>
+          <div className={tab === favourites ? 'select' : 'unSelect'} onClick={()=>{setTab(favourites)}}>Favourites</div>
         </div>
-        {tab === 1 ? <Photos/>:""}
-        {tab === 2 ? <Videos/>:""}
-        {tab === 3 ? <Favourites/>:""}
+        {tab === photos ? <Photos/>:""}
+        {tab === videos ? <Videos/>:""}
+        {tab === favourites ? <Favourites/>:""}
       </div>
     </div>
   )

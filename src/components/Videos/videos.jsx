@@ -76,7 +76,8 @@ const Videos = () => {
           }
 
           const toComponentB = (data) => {
-            navigate('/playVideo', { state: {videoId:data.id, src:data.image, url: data.video_files[0].link, id: data.video_files[0].id, username: data.photographer, userphoto: data.user.url } });
+            navigate('/playVideo', { state: {id:data.id, avg_color:data.avg_color, image:data.image, user:{user_id: data.user.id, name: data.user.name, url: data.user.url}, video_files: [{id: data.video_files[0].id, quality: data.video_files[0].quality, file_type: data.video_files[0].file_type, link: data.video_files[0].link},{id: data.video_files[1].id, quality: data.video_files[1].quality, file_type: data.video_files[1].file_type, link:data.video_files[1].link}]} });
+            // console.log("user id", data.user.id);
           }
 
 
@@ -88,7 +89,7 @@ const Videos = () => {
                   <img src={white} alt="" className='heart-img' onClick={() => { addFav(data); favHandler(); }} /> :
                   <img src={red} alt="" className='heart-img' onClick={() => { removeFav(data) }} />
                 }
-                <Link to="/playVideo" state={{videoId:data.id, src: data.image, url: data.video_files[0].link, username: data.user.name, id: data.video_files[0].id, userphoto: data.user.url }} key={data.id} className="linkButton">
+                <Link to="/playVideo" state={{id:data.id, avg_color: data.avg_color, image:data.image, user:{user_id: data.user.id, name: data.user.name, url: data.user.url}, video_files: [{id: data.video_files[0].id, quality: data.video_files[0].quality, file_type: data.video_files[0].file_type, link: data.video_files[0].link},{id: data.video_files[1].id, quality: data.video_files[1].quality,file_type: data.video_files[1].file_type, link: data.video_files[1].link}]}} key={data.id} className="linkButton">
                 <img src={play} alt="" className='play-img' o onClick={() => { toComponentB(data) }}/>
                 </Link>
                 <div className='photographer-info'>

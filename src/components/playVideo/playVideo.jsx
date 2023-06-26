@@ -15,9 +15,13 @@ const PlayVideo = () => {
     const [inputData, setInputData] = useState();
     const location = useLocation();
     const playVideo = [
-        { videoId: location.state.videoId, src: location.state.src, url: location.state.url, id: location.state.id, username: location.state.username, userphoto: location.state.userphoto }
+        {id: location.state.id, avg_color: location.state.avg_color, image: location.state.image,
+        user:{id: location.state.user.user_id, name: location.state.user.name, url: location.state.user.url}, 
+        video_files:[{id: location.state.video_files[0].id, quality: location.state.video_files[0].quality, file_type: location.state.video_files[0].file_type, link: location.state.video_files[0].link},
+         {id: location.state.video_files[1].id, quality: location.state.video_files[1].quality, file_type: location.state.video_files[1].file_type, link: location.state.video_files[1].link}]},
     ];
-
+    
+    console.log("user id", location.state.user_id);
     console.log("video clicked", playVideo);
 
     
@@ -29,8 +33,8 @@ const PlayVideo = () => {
         console.log("previ", previousData);
         const arr = [];
         previousData.map((user, i) => {
-            if ((user && user.id) === (data && data.videoId)) {
-                console.log("adding",user.id,data.videoId);
+            if ((user && user.id) === (data && data.id)) {
+                console.log("adding",user.id,data.id);
                 arr.push("exists");
             }
         });
@@ -53,7 +57,7 @@ const PlayVideo = () => {
         const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
         let remId = -1;
         for (let i = 0; i < favourites.length; i++) {
-          if (favourites[i].id === data.videoId) {
+          if (favourites[i].id === data.id) {
             remId = i;
           }
         }
@@ -71,13 +75,13 @@ const PlayVideo = () => {
                     // console.log("video data", data.videoId);
 
                     const favHandler = () => {
-                        setInputData(data.url);
+                        setInputData(data.video_files[0].link);
                     };
 
                     let fav = false;
                     for (let i = 0; i < favourites.length; i++) {
-                        if (favourites[i].videoId === data.videoId) {
-                            console.log("both  video id", favourites[i].id, data.videoId);
+                        if (favourites[i].id === data.id) {
+                            console.log("both  video id", favourites[i].id, data.id);
                             fav = true;
                             break
                         }
@@ -89,7 +93,7 @@ const PlayVideo = () => {
                     return (
                         <div className="play-video">
                             <video className='video-box' controls>
-                                <source src={data.url} type="video/mp4" className='video-bigger-img' />
+                                <source src={data.video_files[0].link} type="video/mp4" className='video-bigger-img' />
                             </video>
                             <div className="view-photo-info">
                                 <div className="photo-about-heart">
@@ -99,8 +103,8 @@ const PlayVideo = () => {
                                         (<img src={heart} alt="" className='video-big-heart-img' onClick={()=>{addFav(data); favHandler();}}/>)}
                                 </div>
                                 <div className="video-profile-info">
-                                    <img src={data.userphoto} alt="" className='profile-img' />
-                                    <div className="photo-profile-name">{data.username}</div>
+                                    <img src={data.user.url} alt="" className='profile-img' />
+                                    <div className="photo-profile-name">{data.user.name}</div>
                                 </div>
                             </div>
                         </div>

@@ -34,7 +34,7 @@ const Photos = () => {
       }
     });
     if (arr.includes("exists")) {
-      alert("already exist");
+      // alert("already exist");
     }
     else {
       if (data !== "" && data.message !== "Internal Server Error") {
