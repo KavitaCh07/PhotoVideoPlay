@@ -28,30 +28,20 @@ const PlayVideo = () => {
     const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
 
     const addFav = (data) => {
-        console.log("adding",data);
         const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-        console.log("previ", previousData);
-        const arr = [];
-        previousData.map((user, i) => {
-            if ((user && user.id) === (data && data.id)) {
-                console.log("adding",user.id,data.id);
-                arr.push("exists");
-            }
-        });
-        if (arr.includes("exists")) {
-            alert("already exist");
+        const exists = previousData.some((item) => item.id === data.id);
+        if (exists) {
+          // Alert or handle the case when the item already exists
+        } else {
+          if (data !== "" && data.message !== "Internal Server Error") {
+            const updatedData = [...previousData, data];
+            localStorage.setItem("favPhoto", JSON.stringify(updatedData));
+            setFav(true); // Update favorite status
+          } else {
+            alert("Enter correct data");
+          }
         }
-        else {
-            if (data !== "" && data.message !== "Internal Server Error") {
-                previousData.push(data);
-                localStorage.setItem("favPhoto", JSON.stringify(previousData));
-            }
-            else {
-                alert("enter corect data")
-            }
-        }}
-
-        const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+      }
 
     const removeFav = (data) => {
         const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
@@ -78,17 +68,8 @@ const PlayVideo = () => {
                         setInputData(data.video_files[0].link);
                     };
 
-                    let fav = false;
-                    for (let i = 0; i < favourites.length; i++) {
-                        if (favourites[i].id === data.id) {
-                            console.log("both  video id", favourites[i].id, data.id);
-                            fav = true;
-                            break
-                        }
-                        else {
-                            fav = false;
-                        }
-                    }
+                    const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+                    let fav = previousData.some((item) => item.id === data.id);
 
                     return (
                         <div className="play-video">

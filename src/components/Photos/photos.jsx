@@ -21,28 +21,20 @@ const Photos = () => {
   // console.log("photo page id", photoDataFav[i].id);
   const dispatch = useDispatch();
   const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-  
+
 
   const addFav = (data) => {
-    console.log(data);
     const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-    console.log("previ", previousData);
-    const arr = [];
-    previousData.map((user, i) => {
-      if ((user && user.id) === (data && data.id)) {
-        arr.push("exists");
-      }
-    });
-    if (arr.includes("exists")) {
-      // alert("already exist");
-    }
-    else {
+    const exists = previousData.some((item) => item.id === data.id);
+    if (exists) {
+      // Alert or handle the case when the item already exists
+    } else {
       if (data !== "" && data.message !== "Internal Server Error") {
-        previousData.push(data);
-        localStorage.setItem("favPhoto", JSON.stringify(previousData));
-      }
-      else {
-        alert("enter corect data")
+        const updatedData = [...previousData, data];
+        localStorage.setItem("favPhoto", JSON.stringify(updatedData));
+        setFav(true); // Update favorite status
+      } else {
+        alert("Enter correct data");
       }
     }
   }
@@ -60,34 +52,25 @@ const Photos = () => {
     setFav(!fav);
   };
 
-
   return (
     <div>
       <div className='photo-container'>
         {photoData && photoData.photos && photoData.photos.map((data, i) => {
 
           const favHandler = () => {
-            setInputData(data.src.small);
+            setInputData(data.src.medium);
           };
 
-
-          let fav = false;
-          for (let i = 0; i < previousData.length; i++) {
-            if (previousData[i].id === data.id) {
-              fav = true
-              break
-            } else {
-              fav = false
-            }
-          }
+          const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+        let fav = previousData.some((item) => item.id === data.id);
 
           const toComponentB = (data) => {
-            navigate('/viewPhoto', { state: {id:data.id, src: {landscape:data.src.landscape, medium: data.src.medium, small: data.src.small} , photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url} });
+            navigate('/viewPhoto', { state: { id: data.id, src: { landscape: data.src.landscape, medium: data.src.medium, small: data.src.small }, photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url } });
           }
 
           return (
             <div className='photo'>
-              <Link to="/viewPhoto" state={{id:data.id, src: {landscape:data.src.landscape, medium: data.src.medium, small: data.src.small} , photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url}} key={data.id} className="linkButton">
+              <Link to="/viewPhoto" state={{ id: data.id, src: { landscape: data.src.landscape, medium: data.src.medium, small: data.src.small }, photographer: data.photographer, alt: data.alt, photographer_url: data.photographer_url }} key={data.id} className="linkButton">
                 <img src={data?.src?.medium} alt="" className='photo-img' onClick={() => { toComponentB(data); }} />
               </Link>
               <div className='photo-info'>

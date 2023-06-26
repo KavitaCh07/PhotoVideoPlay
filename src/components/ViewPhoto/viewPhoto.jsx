@@ -17,36 +17,28 @@ const ViewPhoto = (props) => {
     console.log("id clicked", id);
 
     const viewPhoto = [
-        { id: location.state.id, src:location.state.src, alt: location.state.alt, photographer: location.state.photographer, photographer_url: location.state.photographer_url, }
+        { id: location.state.id, src: location.state.src, alt: location.state.alt, photographer: location.state.photographer, photographer_url: location.state.photographer_url, }
     ]
+    
     console.log("viee", viewPhoto);
     const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
 
     const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
 
     const addFav = (data) => {
-        console.log(data);
         const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-        console.log("previ", previousData);
-        const arr = [];
-        previousData.map((user, i) => {
-            if ((user && user.id) === (data && data.id)) {
-                arr.push("exists");
-            }
-        });
-        if (arr.includes("exists")) {
-            alert("already exist");
-        }
-        else {
+        const exists = previousData.some((item) => item.id === data.id);
+        if (exists) {
+            // Alert or handle the case when the item already exists
+        } else {
             if (data !== "" && data.message !== "Internal Server Error") {
-                previousData.push(data);
-                localStorage.setItem("favPhoto", JSON.stringify(previousData));
+                const updatedData = [...previousData, data];
+                localStorage.setItem("favPhoto", JSON.stringify(updatedData));
+                setFav(true); // Update favorite status
+            } else {
+                alert("Enter correct data");
             }
-            else {
-                alert("enter corect data")
-            }
-        }
-    }
+        }}
 
     const removeFav = (data) => {
         const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
@@ -71,18 +63,8 @@ const ViewPhoto = (props) => {
                         setInputData(data.src);
                     };
 
-
-                    let fav = false;
-                    for (let i = 0; i < favourites.length; i++) {
-                        if (favourites[i].id === data.id) {
-                            console.log("both id", favourites[i].id, data.id);
-                            fav = true;
-                            break
-                        }
-                        else {
-                            fav = false;
-                        }
-                    }
+                    const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+                    let fav = previousData.some((item) => item.id === data.id);
 
                     return (
                         <div className="view-photo" key={data.id}>
@@ -101,24 +83,7 @@ const ViewPhoto = (props) => {
                             </div>
                         </div>
                     )
-
                 })}
-                {/* <div className="view-photo" key={location.state.id}>
-            <img src={location.state.src} alt="" className='bigger-img'/>
-            <div className="view-photo-info">
-                <div className="photo-about-heart">
-                    <div className="photo-about">{location.state.alt}</div>
-                    {fav === true ? 
-                    (<img src={heart} alt="" className='big-heart-img'/>):
-                    (<img src={red} alt="" className='big-heart-img'/>)}
-                    
-                </div>
-                <div className="photo-profile-info">
-                    <img src={location.state.userphoto} alt="" className='profile-img'/>
-                    <div className="photo-profile-name">{location.state.username}</div>
-                </div>
-            </div>
-        </div> */}
             </div>
             <Footer />
         </div>

@@ -18,27 +18,20 @@ const Videos = () => {
   const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
 
   const addFav = (data) => {
-    console.log(data);
     const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
-    console.log("previ", previousData);
-    const arr = [];
-    previousData.map((user, i) => {
-      if ((user && user.id) === (data && data.id)) {
-        arr.push("exists");
-      }
-    });
-    if (arr.includes("exists")) {
-      alert("already exist");
-    }
-    else {
+    const exists = previousData.some((item) => item.id === data.id);
+    if (exists) {
+      // Alert or handle the case when the item already exists
+    } else {
       if (data !== "" && data.message !== "Internal Server Error") {
-        previousData.push(data);
-        localStorage.setItem("favPhoto", JSON.stringify(previousData));
+        const updatedData = [...previousData, data];
+        localStorage.setItem("favPhoto", JSON.stringify(updatedData));
+        setFav(true); // Update favorite status
+      } else {
+        alert("Enter correct data");
       }
-      else {
-        alert("enter corect data")
-      }
-    }}
+    }
+  }
 
   const removeFav = (data) => {
     const favourites = JSON.parse(localStorage.getItem("favPhoto") || "[]");
@@ -65,15 +58,9 @@ const Videos = () => {
             setInputData(data.image);
           };
 
-          let fav = false;
-          for (let i = 0; i < previousData.length; i++) {
-            if (previousData[i].id === data.id) {
-              fav = true
-              break
-            } else {
-              fav = false
-            }
-          }
+          const previousData = JSON.parse(localStorage.getItem("favPhoto") || "[]");
+        let fav = previousData.some((item) => item.id === data.id);
+
 
           const toComponentB = (data) => {
             navigate('/playVideo', { state: {id:data.id, avg_color:data.avg_color, image:data.image, user:{user_id: data.user.id, name: data.user.name, url: data.user.url}, video_files: [{id: data.video_files[0].id, quality: data.video_files[0].quality, file_type: data.video_files[0].file_type, link: data.video_files[0].link},{id: data.video_files[1].id, quality: data.video_files[1].quality, file_type: data.video_files[1].file_type, link:data.video_files[1].link}]} });
